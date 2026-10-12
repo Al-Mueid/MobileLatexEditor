@@ -68,11 +68,10 @@ jobs:
       
   #NEW
         - name: Configure project
-                run: |
-                            export ANDROID_NDK_ROOT="$ANDROID_SDK_ROOT/ndk/27.2.12479018"
-
-                  rm -rf build
-
+          run: |
+            export ANDROID_NDK_ROOT="$ANDROID_SDK_ROOT/ndk/27.2.12479018"
+              rm -rf build
+                  
                   echo "Qt: $QT_ROOT_DIR"
                   echo "Qt Host: $QT_HOST_PATH"
                   echo "NDK: $ANDROID_NDK_ROOT"
