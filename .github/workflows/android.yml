@@ -1,5 +1,5 @@
 
-name: Build Android APK
+name: Build Mobile LaTeX Editor APK
 
 on:
   push:
@@ -7,9 +7,12 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build:
-    name: Build Android App
+    name: Build Android APK
     runs-on: ubuntu-24.04
 
     steps:
@@ -24,9 +27,18 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          packages: ''
 
-      - name: Install Android NDK
-        run: sdkmanager "ndk;27.2.12479018"
+      - name: Accept Android SDK licenses
+        run: yes | sdkmanager --licenses
+
+      - name: Install Android NDK and SDK packages
+        run: |
+          sdkmanager \
+            "platform-tools" \
+            "platforms;android-35" \
+            "ndk;27.2.12479018"
 
       - name: Install Qt for Android
         uses: jurplel/install-qt-action@v4
@@ -45,14 +57,19 @@ jobs:
             -DANDROID_SDK_ROOT="$ANDROID_SDK_ROOT" \
             -DANDROID_NDK_ROOT="$ANDROID_SDK_ROOT/ndk/27.2.12479018"
 
-      - name: Build APK
-        run: cmake --build build --target apk --parallel 2
+      - name: Build project
+        run: cmake --build build --parallel 2
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: MobileLatexEditor-APK
-          path: build/android-build/*.apk
-          if-no-files-found: warn
+          path: |
+            build/**/*.apk
+            build/android-build/**/*.apk
+          if-no-files-found: error
+
+  
+
 
 
