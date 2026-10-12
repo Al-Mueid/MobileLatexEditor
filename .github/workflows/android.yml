@@ -41,7 +41,8 @@ jobs:
             "ndk;27.2.12479018"
 
       - name: Install Qt for Android
-        uses: jurplel/install-qt-action@v4
+        uses: jurplel/install-qt-action@v4.4.1
+              #jurplel/install-qt-action@v4
         with:
           version: '6.8.3'
           host: all_os
@@ -49,7 +50,8 @@ jobs:
           arch: android_arm64_v8a
           #aqtversion: '==3.3.0'
           cache: true
-          aqtversion: '==3.1.*'
+          #aqtversion: '==3.1.*'
+          aqtversion: '==3.3.0'
 
       - name: Configure project
         run: |
