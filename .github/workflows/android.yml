@@ -102,6 +102,41 @@ jobs:
       - name: Build project
         run: cmake --build build --parallel 2
 
+
+
+
+      - name: Inspect APK
+        shell: bash
+        run: |
+          set -e
+
+          APK="$(find build -type f -name '*.apk' | head -n 1)"
+
+          if [ -z "$APK" ]; then
+            echo "ERROR: APK not found"
+            exit 1
+          fi
+
+          echo "===== APK FILE ====="
+          ls -lh "$APK"
+
+          echo "===== AVAILABLE BUILD TOOLS ====="
+          ls "$ANDROID_SDK_ROOT/build-tools"
+
+          echo "===== APK PACKAGE INFO ====="
+          AAPT="$(find "$ANDROID_SDK_ROOT/build-tools" -name aapt -type f | sort -V | tail -n 1)"
+          "$AAPT" dump badging "$APK" | head -n 15
+
+          echo "===== APK SIGNATURE ====="
+          APKSIGNER="$(find "$ANDROID_SDK_ROOT/build-tools" -name apksigner -type f | sort -V | tail -n 1)"
+          "$APKSIGNER" verify --verbose "$APK"
+
+
+
+
+
+
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:

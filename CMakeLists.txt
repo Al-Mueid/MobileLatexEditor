@@ -13,6 +13,13 @@ qt_add_executable(MobileLatexEditor
     main.cpp
 )
 
+
+set_target_properties(MobileLatexEditor PROPERTIES
+    QT_ANDROID_PACKAGE_NAME "com.mueid.mobilelatexeditor"
+)
+
+
+
 qt_add_qml_module(MobileLatexEditor
     URI MobileLatexEditor
     VERSION 1.0
