@@ -17,7 +17,7 @@ qt_add_qml_module(MobileLatexEditor
     URI MobileLatexEditor
     VERSION 1.0
     QML_FILES
-        main.qml
+        Main.qml
 )
 
 target_link_libraries(MobileLatexEditor
